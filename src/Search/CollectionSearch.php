@@ -3,6 +3,7 @@
 namespace Guava\Search\Search;
 
 use Closure;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Pipeline;
 
@@ -10,10 +11,17 @@ class CollectionSearch extends Search
 {
     public function __construct(
         protected Collection $collection,
-    ) {
+        protected array      $queryFilters = [],
+    )
+    {
     }
 
-    public function collection(Closure | Collection $collection): static
+    public function getQueryFilter(string $key, $default = null)
+    {
+        return Arr::get($this->queryFilters, $key, $default);
+    }
+
+    public function collection(Closure|Collection $collection): static
     {
         if ($collection instanceof Closure) {
             $this->collection = $collection($this->collection);
@@ -30,11 +38,13 @@ class CollectionSearch extends Search
             ->through([
                 ...$this->getFilters(),
             ])
-            ->then(fn (CollectionSearch $search) => $search->collection)
-        ;
+            ->then(fn(CollectionSearch $search) => $search->collection);
     }
 
-    public static function make(array | Collection | EloquentSearch $collection): static
+    public static function make(
+        array|Collection|EloquentSearch $collection,
+        array                           $queryFilters = [],
+    ): static
     {
         if (is_array($collection)) {
             $collection = collect($collection);
@@ -44,6 +54,9 @@ class CollectionSearch extends Search
             $collection = $collection->getQuery()->get();
         }
 
-        return new static($collection);
+        return app(static::class, [
+            'collection' => $collection,
+            'queryFilters' => $queryFilters,
+        ]);
     }
 }

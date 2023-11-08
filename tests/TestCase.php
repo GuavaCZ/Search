@@ -2,9 +2,9 @@
 
 namespace Guava\Search\Tests;
 
+use Guava\Search\SearchServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Guava\Search\SearchServiceProvider;
 
 class TestCase extends Orchestra
 {

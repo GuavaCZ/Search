@@ -2,9 +2,9 @@
 
 namespace Guava\Search;
 
+use Guava\Search\Commands\SearchCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Guava\Search\Commands\SearchCommand;
 
 class SearchServiceProvider extends PackageServiceProvider
 {

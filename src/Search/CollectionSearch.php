@@ -8,14 +8,12 @@ use Illuminate\Support\Facades\Pipeline;
 
 class CollectionSearch extends Search
 {
-
     public function __construct(
         protected Collection $collection,
-    )
-    {
+    ) {
     }
 
-    public function collection(Closure|Collection $collection): static
+    public function collection(Closure | Collection $collection): static
     {
         if ($collection instanceof Closure) {
             $this->collection = $collection($this->collection);
@@ -32,10 +30,11 @@ class CollectionSearch extends Search
             ->through([
                 ...$this->getFilters(),
             ])
-            ->then(fn(CollectionSearch $search) => $search->collection);
+            ->then(fn (CollectionSearch $search) => $search->collection)
+        ;
     }
 
-    public static function make(array|Collection|EloquentSearch $collection): static
+    public static function make(array | Collection | EloquentSearch $collection): static
     {
         if (is_array($collection)) {
             $collection = collect($collection);
@@ -47,5 +46,4 @@ class CollectionSearch extends Search
 
         return new static($collection);
     }
-
 }

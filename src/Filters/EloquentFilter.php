@@ -8,6 +8,5 @@ use Guava\Search\Search\Search;
 
 abstract class EloquentFilter extends Filter
 {
-
-    public abstract function __invoke(EloquentSearch|Search $search, Closure $next);
+    abstract public function __invoke(EloquentSearch | Search $search, Closure $next);
 }

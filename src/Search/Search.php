@@ -18,7 +18,7 @@ abstract class Search
         return $this;
     }
 
-    public function filter(Filter|string $filter): static
+    public function filter(Filter | string $filter): static
     {
         $this->filters[] = $filter;
 
@@ -29,5 +29,4 @@ abstract class Search
     {
         return $this->filters;
     }
-
 }

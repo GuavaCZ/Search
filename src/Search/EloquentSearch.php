@@ -10,20 +10,19 @@ use Illuminate\Support\Facades\Pipeline;
 
 class EloquentSearch extends Search
 {
-
     public function __construct(
         protected Builder $query,
-        protected array   $queryFilters = [],
-    )
-    {
-//        dd(request()->route()->controller);
+        protected array $queryFilters = [],
+    ) {
+        //        dd(request()->route()->controller);
     }
 
-    public function getQueryFilter(string $key, $default = null) {
+    public function getQueryFilter(string $key, $default = null)
+    {
         return Arr::get($this->queryFilters, $key, $default);
     }
 
-    public function query(Closure|Builder $query): static
+    public function query(Closure | Builder $query): static
     {
         if ($query instanceof Closure) {
             $this->query = $query($this->query);
@@ -40,7 +39,8 @@ class EloquentSearch extends Search
             ->through([
                 ...$this->getFilters(),
             ])
-            ->then(fn(EloquentSearch $search) => $search->query);
+            ->then(fn (EloquentSearch $search) => $search->query)
+        ;
     }
 
     public function getCollection(): Collection
@@ -49,10 +49,9 @@ class EloquentSearch extends Search
     }
 
     public static function make(
-        string|Builder $query,
-        array          $queryFilters = [],
-    ): static
-    {
+        string | Builder $query,
+        array $queryFilters = [],
+    ): static {
         if (is_string($query)) {
             $query = $query::query();
         }
@@ -62,5 +61,4 @@ class EloquentSearch extends Search
             'queryFilters' => $queryFilters,
         ]);
     }
-
 }

@@ -7,7 +7,5 @@ use Guava\Search\Search\Search;
 
 interface Filterable
 {
-
     public function __invoke(Search $search, Closure $next);
-
 }

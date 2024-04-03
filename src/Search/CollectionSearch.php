@@ -11,9 +11,8 @@ class CollectionSearch extends Search
 {
     public function __construct(
         protected Collection $collection,
-        protected array      $queryFilters = [],
-    )
-    {
+        protected array $queryFilters = [],
+    ) {
     }
 
     public function getQueryFilter(string $key, $default = null)
@@ -21,7 +20,7 @@ class CollectionSearch extends Search
         return Arr::get($this->queryFilters, $key, $default);
     }
 
-    public function collection(Closure|Collection $collection): static
+    public function collection(Closure | Collection $collection): static
     {
         if ($collection instanceof Closure) {
             $this->collection = $collection($this->collection);
@@ -38,14 +37,14 @@ class CollectionSearch extends Search
             ->through([
                 ...$this->getFilters(),
             ])
-            ->then(fn(CollectionSearch $search) => $search->collection);
+            ->then(fn (CollectionSearch $search) => $search->collection)
+        ;
     }
 
     public static function make(
-        array|Collection|EloquentSearch $collection,
-        array                           $queryFilters = [],
-    ): static
-    {
+        array | Collection | EloquentSearch $collection,
+        array $queryFilters = [],
+    ): static {
         if (is_array($collection)) {
             $collection = collect($collection);
         }
